@@ -30,6 +30,17 @@ class KnowledgeBase:
     def get_actions_description(self):
         return self.data.get("actions_description", {})
 
+    def get_diagnosis_groups(self):
+        return self.data.get("diagnosis_groups", {})
+
+    def get_diagnosis_group_for(self, diagnosis_name):
+        """Возвращает имя группы для указанного диагноза"""
+        groups = self.get_diagnosis_groups()
+        for group_name, group_info in groups.items():
+            if diagnosis_name in group_info.get("members", []):
+                return group_name
+        return None
+
     def add_diagnosis(self, name, conditions, repair):
         self.data["diagnoses"][name] = {
             "conditions": conditions,
